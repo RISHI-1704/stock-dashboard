@@ -8,7 +8,7 @@
 
 A **live** stock market analytics dashboard built with Python and Streamlit, pulling real-time NSE data via the yfinance API. Features end-to-end test coverage with Pytest (unit tests) and Playwright (UI automation), integrated into a CI/CD pipeline via GitHub Actions.
 
-🔗 **[Live Demo](https://your-app-name.streamlit.app)** ← replace after deploying
+<!-- 🔗 **[Live Demo](https://your-app-name.streamlit.app)** ← replace after deploying -->
 
 ---
 
@@ -100,4 +100,4 @@ pytest tests/test_ui.py -v
 
 ---
 
-Built by **Rishi Cheravath** · [LinkedIn](https://www.linkedin.com/in/rishi-cheravath) · [GitHub](https://github.com/RISHI-1704)
+<!-- Built by **Rishi Cheravath** · [LinkedIn](https://www.linkedin.com/in/rishi-cheravath) · [GitHub](https://github.com/RISHI-1704) -->
