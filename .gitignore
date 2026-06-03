@@ -9,6 +9,7 @@ dist/
 build/
 
 # Virtual environments
+conda-envs/
 venv/
 env/
 .env
