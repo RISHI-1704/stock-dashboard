@@ -1,7 +1,6 @@
 import pytest
 import pandas as pd
 import numpy as np
-from datetime import datetime
 from unittest.mock import patch, MagicMock
 from data import (
     compute_returns,
@@ -9,11 +8,12 @@ from data import (
     compute_kpis,
     get_sector_performance,
     get_correlation_matrix,
-    get_current_prices
+    get_current_prices,
     NIFTY50_STOCKS,
 )
 
-#Fixtures
+
+# ── Fixtures ────────────────────────────────────────────────────────────────────
 
 @pytest.fixture
 def sample_close():
@@ -36,7 +36,9 @@ def empty_df():
 def single_stock(sample_close):
     return sample_close[["TCS.NS"]]
 
-# Live prices
+
+# ── get_current_prices ──────────────────────────────────────────────────────────
+
 class TestGetCurrentPrices:
     def test_returns_dataframe(self):
         """Should return a DataFrame with correct columns."""
@@ -78,13 +80,14 @@ class TestGetCurrentPrices:
 
         assert len(result) == len(tickers)
 
-#compute_returns
+
+# ── compute_returns ─────────────────────────────────────────────────────────────
 
 class TestComputeReturns:
-    def test_shape(self, sample_close): 
+    def test_shape(self, sample_close):
         result = compute_returns(sample_close)
         assert result.shape[1] == sample_close.shape[1]
-        assert len(result) == len(sample_close) - 1  # first row dropped (NaN)
+        assert len(result) == len(sample_close) - 1
 
     def test_returns_are_fractions(self, sample_close):
         result = compute_returns(sample_close)
@@ -98,8 +101,8 @@ class TestComputeReturns:
         """Manually verify return calculation."""
         df = pd.DataFrame({"A": [100.0, 110.0, 99.0]})
         result = compute_returns(df)
-        assert abs(result["A"].iloc[0] - 0.10) < 1e-6   # 10% gain
-        assert abs(result["A"].iloc[1] + 0.10) < 1e-6  # 10% loss
+        assert abs(result["A"].iloc[0] - 0.10) < 1e-6
+        assert abs(result["A"].iloc[1] + 0.10) < 1e-6
 
 
 # ── compute_rolling_average ─────────────────────────────────────────────────────
