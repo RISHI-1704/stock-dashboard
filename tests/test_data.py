@@ -9,6 +9,7 @@ from data import (
     compute_kpis,
     get_sector_performance,
     get_correlation_matrix,
+    get_current_prices
     NIFTY50_STOCKS,
 )
 
