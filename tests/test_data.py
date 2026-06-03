@@ -2,6 +2,7 @@ import pytest
 import pandas as pd
 import numpy as np
 from datetime import datetime
+from unittest.mock import patch, MagicMock
 from data import (
     compute_returns,
     compute_rolling_average,
@@ -38,8 +39,14 @@ def single_stock(sample_close):
 class TestGetCurrentPrices:
     def test_returns_dataframe(self):
         """Should return a DataFrame with correct columns."""
-        from data import get_current_prices
-        result = get_current_prices(["TCS.NS"])
+        mock_info = MagicMock()
+        mock_info.last_price = 3500.0
+        mock_info.previous_close = 3450.0
+
+        with patch("data.yf.Ticker") as mock_ticker:
+            mock_ticker.return_value.fast_info = mock_info
+            result = get_current_prices(["TCS.NS"])
+
         assert isinstance(result, pd.DataFrame)
         assert "Ticker" in result.columns
         assert "Current Price" in result.columns
@@ -47,15 +54,27 @@ class TestGetCurrentPrices:
 
     def test_price_is_positive(self):
         """Stock prices should always be positive."""
-        from data import get_current_prices
-        result = get_current_prices(["TCS.NS"])
+        mock_info = MagicMock()
+        mock_info.last_price = 3500.0
+        mock_info.previous_close = 3450.0
+
+        with patch("data.yf.Ticker") as mock_ticker:
+            mock_ticker.return_value.fast_info = mock_info
+            result = get_current_prices(["TCS.NS"])
+
         assert (result["Current Price"] > 0).all()
 
     def test_multiple_tickers(self):
         """Should return one row per ticker."""
-        from data import get_current_prices
-        tickers = ["TCS.NS", "INFY.NS", "HDFCBANK.NS"]
-        result = get_current_prices(tickers)
+        mock_info = MagicMock()
+        mock_info.last_price = 3500.0
+        mock_info.previous_close = 3450.0
+
+        with patch("data.yf.Ticker") as mock_ticker:
+            mock_ticker.return_value.fast_info = mock_info
+            tickers = ["TCS.NS", "INFY.NS", "HDFCBANK.NS"]
+            result = get_current_prices(tickers)
+
         assert len(result) == len(tickers)
 
 #compute_returns
