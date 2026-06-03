@@ -29,7 +29,7 @@ jobs:
           pytest tests/test_data.py -v --tb=short
 
       - name: Install Playwright browsers
-        run: playwright install chromium --with-deps
+        run: python -m playwright install chromium --with-deps
 
       - name: Start Streamlit app
         run: |
